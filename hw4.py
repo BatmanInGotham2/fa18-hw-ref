@@ -257,10 +257,7 @@ Example 2:
 		4294967296 ** (1 / 16) (i.e., 4)
 """
 def happy_numbers(n):
-	listToReturn = []
-	for i in range(1, n + 1):
-		dig = [int(d) for d in str(i)]
-		sum = 0
+	pass
 
 
 
