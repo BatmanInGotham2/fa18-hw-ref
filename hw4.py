@@ -13,8 +13,17 @@ most_common_char
 Given an input string s, return the most common character in s.
 """
 def most_common_char(s):
-	pass
+	if s == None or len(s) == 0:
+		return None
+	dict = {}
+	for c in s:
+		if c in dict:
+			dict[c] = dict[c] + 1
+		else:
+			dict[c] = 1
+	return max(dict, key=dict.get)
 
+#print(most_common_char("bcds"))
 
 """
 alphabet_finder
@@ -37,8 +46,31 @@ Example 2:
 		None
 """
 def alphabet_finder(s):
-	pass
+	if s == None or len(s) == 0:
+		return None
+	alpha = "abcdefghijklmnopqrstuvwxyz"
+	str = s.lower()
+	strs = []
+	for i in range(0, len(s)):
+		alpha = "abcdefghijklmnopqrstuvwxyz"
+		count = i
+		while len(alpha) > 0 and count < len(str):
+			if str[count] in alpha:
+				alpha = alpha.replace(str[count], "")
+			count += 1
+		if len(alpha) == 0:
+			strs.append(s[i:count])
+	if(len(strs) == 0):
+		return None
+	mini = 0
+	minL = len(strs[0])
+	for i in range(0, len(strs)):
+		if(len(strs[i]) < minL):
+			mini = i
+			minL = len(strs[i])
+	return strs[mini]
 
+#print(alphabet_finder("abcdefghxcvbnm insensitive paella"))
 
 """
 longest_unique_subarray
@@ -56,8 +88,26 @@ Example:
 		[1, 6]
 """
 def longest_unique_subarray(arr):
-	pass
+	lists = []
+	if arr is None or len(arr) == 0:
+		return None
+	for i in range(0, len(arr)):
+		sublist = []
+		valueList = []
+		count = i
+		while count < len(arr) and arr[count] not in valueList:
+			sublist.append(count)
+			valueList.append(arr[count])
+			count += 1
+		lists.append(sublist)
+	if len(lists) == 0:
+		return None
+	returnList = []
+	returnList.append((max(lists, key=len))[0])
+	returnList.append(len(max(lists, key=len)))
+	return returnList
 
+#print(longest_unique_subarray([1,2,1]))
 
 """
 string_my_one_true_love
@@ -99,8 +149,37 @@ Example 3:
 		False
 """
 def string_my_one_true_love(s):
-	pass
+	if s == None or len(s) == 0:
+		return False
+	if len(s) == 1:
+		return True
+	dict = {}
+	for c in s:
+		if c in dict:
+			dict[c] = dict[c] + 1
+		else:
+			dict[c] = 1
+	minim = min(dict, key=dict.get)
+	maxim = max(dict, key=dict.get)
+	check = 0
+	if dict[maxim] != dict[minim]:
+		listOfKeys = []
+		for item in dict:
+			if dict[item] == dict[minim]:
+				listOfKeys.append(item)
+		if len(listOfKeys) > 1:
+			check = dict[maxim] - 1
+			dict[maxim] = dict[maxim] - 1
+		else:
+			check = dict[maxim]
+			dict[minim] = dict[minim] - 1
 
+		for d in dict:
+			if dict[d] != check and dict[d] != 0:
+				return False
+	return True
+
+#print(string_my_one_true_love("abcbabcdcdda"))
 
 """
 alive_people
@@ -117,8 +196,24 @@ Example:
 		1961
 """
 def alive_people(data):
-	pass
+	if data is None or len(data) == 0:
+		return None
+	dict = {}
+	for i in data:
+		for j in range(0, i[1] + 1):
+			year = i[0] + j
+			if year in dict:
+				dict[year] = dict[year] + 1
+			else:
+				dict[year] = 1
+	maxim = max(dict, key=dict.get)
+	list = []
+	for d in dict:
+		if dict[d] == dict[maxim]:
+			list.append(d)
+	return min(list)
 
+#print(alive_people([[1920, 80], [1940, 22], [1961, 10]]))
 
 """
 three_sum
@@ -162,7 +257,15 @@ Example 2:
 		4294967296 ** (1 / 16) (i.e., 4)
 """
 def happy_numbers(n):
-	pass
+	listToReturn = []
+	for i in range(1, n + 1):
+		dig = [int(d) for d in str(i)]
+		sum = 0
+
+
+
+
+
 
 
 """
@@ -194,6 +297,25 @@ Example 2:
 		[1, 2]
 """
 def zero_sum_subarray(arr):
-    pass 
+	lists = []
+	if arr is None or len(arr) == 0:
+		return None
+	for i in range(0, len(arr)):
+		count = i + 1
+		sum = arr[i]
+		sublist = []
+		sublist.append(i)
+		while count < len(arr) and sum != 0:
+			sum += arr[count]
+			sublist.append(count)
+			count += 1
+		if sum == 0:
+			lists.append(sublist)
+	if len(lists) == 0:
+		return None
+	returnList = []
+	returnList.append((min(lists, key=len))[0])
+	returnList.append(len(min(lists, key=len)))
+	return returnList
 
-
+#print(zero_sum_subarray([1, 1, 2, 3, -5]))
